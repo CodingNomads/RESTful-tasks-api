@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,11 +28,22 @@ public class UserController {
 
 
     @GetMapping
-    public CustomResponseObject<List<User>> getUsers() throws Exception {
+    public CustomResponseObject<List<User>> getUsers(@RequestParam(value = "email", required = false,
+        defaultValue = "null") String email) throws Exception {
 
-        List<User> users = userService.findAllUsers();
+        List<User> users = new ArrayList<>();
         CustomResponseObject<List<User>> obj = new CustomResponseObject();
-        obj.setData(users);
+
+        if (!email.equalsIgnoreCase("null")){
+            User user = userService.findUserByEmail(email);
+            List<User> list = new ArrayList<>();
+            list.add(user);
+            obj.setData(list);
+        } else {
+            users = userService.findAllUsers();
+            obj.setData(users);
+        }
+
         obj.setStatusCode(200);
 
         return obj;
@@ -41,18 +53,6 @@ public class UserController {
     @GetMapping("/{id}")
     public CustomResponseObject<User> findUserById(@PathVariable("id") long id) throws Exception {
         User user = userService.findUserById(id);
-
-        CustomResponseObject<User> obj = new CustomResponseObject();
-        obj.setData(user);
-        obj.setStatusCode(200);
-
-        return obj;
-
-    }
-
-    @GetMapping()
-    public CustomResponseObject<User> findUserByEmail(@RequestParam("email") String email) throws Exception {
-        User user = userService.findUserByEmail(email);
 
         CustomResponseObject<User> obj = new CustomResponseObject();
         obj.setData(user);
