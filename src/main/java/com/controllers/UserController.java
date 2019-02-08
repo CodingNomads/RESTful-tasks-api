@@ -50,6 +50,18 @@ public class UserController {
 
     }
 
+    @GetMapping()
+    public CustomResponseObject<User> findUserByEmail(@RequestParam("email") String email) throws Exception {
+        User user = userService.findUserByEmail(email);
+
+        CustomResponseObject<User> obj = new CustomResponseObject();
+        obj.setData(user);
+        obj.setStatusCode(200);
+
+        return obj;
+
+    }
+
     @GetMapping("/{id}/tasks")
     public CustomResponseObject<List<Task>> getTasks(
             @PathVariable(value = "id") long userId,

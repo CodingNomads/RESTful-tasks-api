@@ -44,6 +44,19 @@ public class UserService {
         return u;
     }
 
+    public User findUserByEmail(String email) throws Exception{
+
+        User u;
+
+        try {
+            u = userRepository.findByEmail(email);
+        } catch(Exception e){
+            throw e;
+        }
+
+        return u;
+    }
+
     public User createUser(User user) throws Exception {
 
         try {

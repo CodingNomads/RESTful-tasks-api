@@ -22,4 +22,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Query(value = "update tasks_app.users set first_name = ?1, last_name = ?2, email = ?3 where id = ?4", nativeQuery = true)
     int updateUser(String firstName, String lastName, String email, long id);
 
+
+
 }
