@@ -86,10 +86,10 @@ public class TaskService {
     }
 
     //@Cacheable(value = "tasks", key = "{#userId, #todo}")
-    public List<Task> findAllTasksByUserId(long userId, boolean todo) {
+    public List<Task> findAllTasksByUserId(long userId, boolean complete) {
 
-        if (todo){
-            return taskRepository.findByUserIdAndCompletedFalse(userId);
+        if (complete){
+            return taskRepository.findByUserIdAndCompletedTrue(userId);
         } else {
             return taskRepository.findByUserId(userId);
         }

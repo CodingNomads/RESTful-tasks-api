@@ -23,7 +23,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
     @Query(value = "update tasks_app.tasks set description = ?1, name= ?2, completed = ?3 where id = ?4", nativeQuery = true)
     int updateTask(String description, String name, boolean completed, Long id);
 
-    List<Task> findByUserIdAndCompletedFalse(long userId);
+    List<Task> findByUserIdAndCompletedTrue(long userId);
 
     List<Task> findByUserId(long userId);
 
