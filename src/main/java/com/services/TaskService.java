@@ -7,7 +7,7 @@ import com.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
+import java.io.PrintStream;
 import java.util.List;
 
 /**
@@ -62,6 +62,9 @@ public class TaskService {
 
     //@CachePut(value = "tasks", key = "#task.id")
     public Task updateTask(Task task) throws CustomDatabaseException {
+        System.out.println();
+
+        PrintStream test = System.out;
 
         try {
             int i = taskRepository.updateTask(task.getDescription(), task.getName(), task.isCompleted(), task.getId());

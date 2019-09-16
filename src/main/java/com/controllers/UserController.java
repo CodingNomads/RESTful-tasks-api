@@ -118,5 +118,4 @@ public class UserController {
 
         throw new CustomDatabaseException("Unable to delete user");
     }
-
 }
