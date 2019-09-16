@@ -27,5 +27,9 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
 
     List<Task> findByUserId(long userId);
 
+    List<Task> findByUserIdAndCompletedFalse(long userId);
 
+    List<Task> findByCompletedTrue();
+
+    List<Task> findByCompletedFalse();
 }

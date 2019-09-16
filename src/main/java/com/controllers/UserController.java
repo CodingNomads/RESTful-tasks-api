@@ -65,11 +65,11 @@ public class UserController {
     @GetMapping("/{id}/tasks")
     public CustomResponseObject<List<Task>> getTasks(
             @PathVariable(value = "id") long userId,
-            @RequestParam(value = "complete", required = false, defaultValue = "false") boolean todo) throws Exception {
+            @RequestParam(value = "complete", required = false, defaultValue = "-1") String complete) throws Exception {
 
         List<Task> tasks;
 
-        tasks = taskService.findAllTasksByUserId(userId, todo);
+        tasks = taskService.findAllTasksByUserId(userId, complete);
 
 
         CustomResponseObject<List<Task>> obj = new CustomResponseObject();

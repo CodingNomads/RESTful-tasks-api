@@ -1,10 +1,13 @@
 package com.services;
 
 import com.exceptions.CustomDatabaseException;
+import com.google.common.collect.Lists;
 import com.model.Task;
 import com.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -86,12 +89,30 @@ public class TaskService {
     }
 
     //@Cacheable(value = "tasks", key = "{#userId, #todo}")
-    public List<Task> findAllTasksByUserId(long userId, boolean complete) {
+    public List<Task> findAllTasksByUserId(long userId, String complete) {
 
-        if (complete){
-            return taskRepository.findByUserIdAndCompletedTrue(userId);
+        if (!complete.equalsIgnoreCase("-1")){
+            if(complete.equalsIgnoreCase("true")) {
+                return taskRepository.findByUserIdAndCompletedTrue(userId);
+            } else if (complete.equalsIgnoreCase("false")) {
+                return taskRepository.findByUserIdAndCompletedFalse(userId);
+            } else {
+                return taskRepository.findByUserId(userId);
+            }
         } else {
             return taskRepository.findByUserId(userId);
+        }
+    }
+
+    public List<Task> findAllTasksByCompletion(String complete){
+        if (complete.equalsIgnoreCase("true")){
+            return taskRepository.findByCompletedTrue();
+        } else if (complete.equalsIgnoreCase("false")){
+            return taskRepository.findByCompletedFalse();
+        } else {
+            Iterable<Task> iter = taskRepository.findAll();
+            List<Task> tasks = Lists.newArrayList(iter);
+            return tasks;
         }
     }
 }

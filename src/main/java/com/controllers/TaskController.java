@@ -37,15 +37,20 @@ public class TaskController {
     @GetMapping
     public CustomResponseObject<List<Task>> getTasks(
             @RequestParam(value = "userId", required = false, defaultValue = "-1") long userId,
-            @RequestParam(value = "complete", required = false, defaultValue = "false") boolean complete) throws Exception {
+            @RequestParam(value = "complete", required = false, defaultValue = "-1") String complete) throws Exception {
 
         List<Task> tasks;
 
-        if (userId == -1){
+        if (userId == -1 && complete.equalsIgnoreCase("-1")){
             tasks = taskService.findAllTasks();
-        } else {
+        } else if (userId == -1 && !complete.equalsIgnoreCase("-1")) {
+            tasks = taskService.findAllTasksByCompletion(complete);
+        } else if (userId != -1 && !complete.equalsIgnoreCase("-1")) {
             tasks = taskService.findAllTasksByUserId(userId, complete);
+        } else {
+            throw new Exception("Invalid request parameters");
         }
+
 
         CustomResponseObject<List<Task>> obj = new CustomResponseObject();
         obj.setData(tasks);
