@@ -120,3 +120,24 @@ public class UserController {
     }
 
 }
+
+class Frog {
+    String name;
+    String habitat;
+    static int numFrogs;
+
+    public Frog(String name, String habitat){
+        this.name = name;
+        this.habitat = habitat;
+        numFrogs++;
+    }
+
+    @Override
+    public String toString() {
+        return "Frog{" +
+                "name='" + name + '\'' +
+                ", habitat='" + habitat + '\'' +
+                ", numFrogs= " + numFrogs + '\'' +
+                '}';
+    }
+}
